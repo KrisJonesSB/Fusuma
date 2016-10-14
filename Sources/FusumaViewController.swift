@@ -194,19 +194,14 @@ public final class FusumaViewController: UIViewController {
         libraryButton.clipsToBounds = true
         videoButton.clipsToBounds = true
 
-        changeMode(Mode.library)
+        changeMode(Mode.camera)
         
         photoLibraryViewerContainer.addSubview(albumView)
         cameraShotContainer.addSubview(cameraView)
         videoShotContainer.addSubview(videoView)
         
 		titleLabel.textColor = fusumaBaseTintColor
-		
-        if modeOrder != .libraryFirst {
-            libraryFirstConstraints.forEach { $0.priority = 250 }
-            cameraFirstConstraints.forEach { $0.priority = 1000 }
-        }
-        
+
         if !hasVideo {
             
             videoButton.removeFromSuperview()
