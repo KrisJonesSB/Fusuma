@@ -80,7 +80,7 @@ public final class FusumaViewController: UIViewController {
 
     public var hasVideo = false
 
-    var mode: Mode = Mode.camera
+    var mode: Mode = Mode.library
     public var modeOrder: FusumaModeOrder = .cameraFirst
     var willFilter = true
 
@@ -193,12 +193,12 @@ public final class FusumaViewController: UIViewController {
         cameraButton.clipsToBounds  = true
         libraryButton.clipsToBounds = true
         videoButton.clipsToBounds = true
-
-        changeMode(Mode.camera)
+ 
         
-        photoLibraryViewerContainer.addSubview(albumView)
         cameraShotContainer.addSubview(cameraView)
+        photoLibraryViewerContainer.addSubview(albumView)
         videoShotContainer.addSubview(videoView)
+       changeMode(Mode.camera)
         
 		titleLabel.textColor = fusumaBaseTintColor
 
