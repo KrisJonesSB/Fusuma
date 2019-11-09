@@ -75,7 +75,7 @@ final class FSVideoCameraView: UIView {
                 let totalSeconds = 60.0 //Total Seconds of capture time
                 let timeScale: Int32 = 30 //FPS
                 
-                let maxDuration = CMTimeMakeWithSeconds(totalSeconds, timeScale)
+                let maxDuration = CMTimeMakeWithSeconds(totalSeconds, preferredTimescale: timeScale)
                 
                 videoOutput?.maxRecordedDuration = maxDuration
                 videoOutput?.minFreeDiskSpaceLimit = 1024 * 1024 //SET MIN FREE SPACE IN BYTES FOR RECORDING TO CONTINUE ON A VOLUME
@@ -118,13 +118,13 @@ final class FSVideoCameraView: UIView {
             flipButton.tintColor  = fusumaBaseTintColor
             shotButton.tintColor  = fusumaBaseTintColor
             
-            flashButton.setImage(flashOffImage?.withRenderingMode(.alwaysTemplate), for: UIControlState())
-            flipButton.setImage(flipImage?.withRenderingMode(.alwaysTemplate), for: UIControlState())
-            shotButton.setImage(videoStartImage?.withRenderingMode(.alwaysTemplate), for: UIControlState())
+            flashButton.setImage(flashOffImage?.withRenderingMode(.alwaysTemplate), for: UIControl.State())
+            flipButton.setImage(flipImage?.withRenderingMode(.alwaysTemplate), for: UIControl.State())
+            shotButton.setImage(videoStartImage?.withRenderingMode(.alwaysTemplate), for: UIControl.State())
         } else {
-            flashButton.setImage(flashOffImage, for: UIControlState())
-            flipButton.setImage(flipImage, for: UIControlState())
-            shotButton.setImage(videoStartImage, for: UIControlState())
+            flashButton.setImage(flashOffImage, for: UIControl.State())
+            flipButton.setImage(flipImage, for: UIControl.State())
+            shotButton.setImage(videoStartImage, for: UIControl.State())
         }
         
         flashConfiguration()
@@ -176,7 +176,7 @@ final class FSVideoCameraView: UIView {
         } else {
             shotImage = videoStartImage
         }
-        self.shotButton.setImage(shotImage, for: UIControlState())
+        self.shotButton.setImage(shotImage, for: UIControl.State())
         
         if self.isRecording {
             let outputPath = "\(NSTemporaryDirectory())output.mov"
@@ -215,7 +215,7 @@ final class FSVideoCameraView: UIView {
                 
                 for input in session.inputs {
                     
-                    session.removeInput(input as! AVCaptureInput)
+                    session.removeInput(input )
                 }
                 
                 let position = (videoInput?.device.position == AVCaptureDevice.Position.front) ? AVCaptureDevice.Position.back : AVCaptureDevice.Position.front
@@ -255,12 +255,12 @@ final class FSVideoCameraView: UIView {
                 if mode == AVCaptureDevice.FlashMode.off {
                     
                     device.flashMode = AVCaptureDevice.FlashMode.on
-                    flashButton.setImage(flashOnImage, for: UIControlState())
+                    flashButton.setImage(flashOnImage, for: UIControl.State())
                     
                 } else if mode == AVCaptureDevice.FlashMode.on {
                     
                     device.flashMode = AVCaptureDevice.FlashMode.off
-                    flashButton.setImage(flashOffImage, for: UIControlState())
+                    flashButton.setImage(flashOffImage, for: UIControl.State())
                 }
                 
                 device.unlockForConfiguration()
@@ -269,7 +269,7 @@ final class FSVideoCameraView: UIView {
             
         } catch _ {
             
-            flashButton.setImage(flashOffImage, for: UIControlState())
+            flashButton.setImage(flashOffImage, for: UIControl.State())
             return
         }
         
@@ -336,7 +336,7 @@ extension FSVideoCameraView {
         self.addSubview(self.focusView!)
         
         UIView.animate(withDuration: 0.8, delay: 0.0, usingSpringWithDamping: 0.8,
-                                   initialSpringVelocity: 3.0, options: UIViewAnimationOptions.curveEaseIn, // UIViewAnimationOptions.BeginFromCurrentState
+                       initialSpringVelocity: 3.0, options: UIView.AnimationOptions.curveEaseIn, // UIViewAnimationOptions.BeginFromCurrentState
             animations: {
                 self.focusView!.alpha = 1.0
                 self.focusView!.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
@@ -355,7 +355,7 @@ extension FSVideoCameraView {
                 try device.lockForConfiguration()
                 
                 device.flashMode = AVCaptureDevice.FlashMode.off
-                flashButton.setImage(flashOffImage, for: UIControlState())
+                flashButton.setImage(flashOffImage, for: UIControl.State())
                 
                 device.unlockForConfiguration()
                 
